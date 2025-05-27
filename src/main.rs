@@ -38,11 +38,11 @@ impl Catalog {
         self.items.push(item);
     }
 
-    fn get_by_index(&self, index: usize) -> MightHaveValue {
+    fn get_by_index(&self, index: usize) -> Option<&Media> {
         if self.items.len() > index {
-            return MightHaveValue::ThereIsAValue(&self.items[index]);
+            return Some(&self.items[index]);
         } else {
-            MightHaveValue::NoValueAvailable
+            None
         }
     }
 }
@@ -71,15 +71,23 @@ fn main() {
 
 
     match catalog.get_by_index(0) {
-        MightHaveValue::ThereIsAValue(media) => media.describe(),
-        MightHaveValue::NoValueAvailable => println!("No item found"),
-    }
-    match catalog.get_by_index(100) {
-        MightHaveValue::ThereIsAValue(media) => media.describe(),
-        MightHaveValue::NoValueAvailable => println!("No item found"),
+        Option::Some(media) => media.describe(),
+        Option::None => println!("No item found"),
     }
     match catalog.items.get(100) {
         Option::Some(media) => media.describe(),
         Option::None => println!("No item found"),
+    }
+
+    if let Some(media) = catalog.get_by_index(0) {
+        media.describe();
+    } else {
+        println!("No item found");
+    }
+
+    if let Some(media) = catalog.get_by_index(100) {    
+        media.describe();
+    } else {
+        println!("No item found");
     }
 }
