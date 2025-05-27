@@ -20,6 +20,12 @@ impl Media {
 }
 
 #[derive(Debug)]
+enum MightHaveValue<'a> {
+    ThereIsAValue(&'a Media),
+    NoValueAvailable,
+}
+
+#[derive(Debug)]
 struct Catalog {
     items: Vec<Media>,
 }
@@ -30,6 +36,14 @@ impl Catalog {
     }
     fn add_item(&mut self, item: Media) {
         self.items.push(item);
+    }
+
+    fn get_by_index(&self, index: usize) -> MightHaveValue {
+        if self.items.len() > index {
+            return MightHaveValue::ThereIsAValue(&self.items[index]);
+        } else {
+            MightHaveValue::NoValueAvailable
+        }
     }
 }
 fn print_media(media: Media) {
@@ -52,5 +66,16 @@ fn main() {
     catalog.add_item(book);
     catalog.add_item(movie);
     catalog.add_item(audio_book);
-    println!("{:?}", catalog);
+    catalog.add_item(Media::Podcast(1));
+    catalog.add_item(Media::Placeholder);
+
+
+    match catalog.get_by_index(0) {
+        MightHaveValue::ThereIsAValue(media) => media.describe(),
+        MightHaveValue::NoValueAvailable => println!("No item found"),
+    }
+    match catalog.get_by_index(100) {
+        MightHaveValue::ThereIsAValue(media) => media.describe(),
+        MightHaveValue::NoValueAvailable => println!("No item found"),
+    }
 }
