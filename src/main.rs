@@ -1,51 +1,8 @@
-#[derive(Debug)]
-enum Media {
-    Book { title: String, author: String },
-    Movie { title: String, director: String },
-    AudioBook { title: String },
-    Podcast(u32),
-    Placeholder,
-}
+mod content;
 
-impl Media {
-    fn describe(&self) {
-        match self {
-            Media::Book { title, author } => println!("Book: {} by {}", title, author),
-            Media::Movie { title, director } => println!("Movie: {} by {}", title, director),
-            Media::AudioBook { title } => println!("AudioBook: {}", title),
-            Media::Podcast(episode) => println!("Podcast: {}", episode),
-            Media::Placeholder => println!("Placeholder"),
-        }
-    }
-}
+use content::catalog::Catalog;
+use content::media::Media;
 
-#[derive(Debug)]
-enum MightHaveValue<'a> {
-    ThereIsAValue(&'a Media),
-    NoValueAvailable,
-}
-
-#[derive(Debug)]
-struct Catalog {
-    items: Vec<Media>,
-}
-
-impl Catalog {
-    fn new() -> Self {
-        Self { items: Vec::new() }
-    }
-    fn add_item(&mut self, item: Media) {
-        self.items.push(item);
-    }
-
-    fn get_by_index(&self, index: usize) -> Option<&Media> {
-        if self.items.len() > index {
-            return Some(&self.items[index]);
-        } else {
-            None
-        }
-    }
-}
 fn print_media(media: Media) {
     println!("{:?}", media);
 }
@@ -68,7 +25,6 @@ fn main() {
     catalog.add_item(audio_book);
     catalog.add_item(Media::Podcast(1));
     catalog.add_item(Media::Placeholder);
-
 
     match catalog.get_by_index(0) {
         Option::Some(media) => media.describe(),
