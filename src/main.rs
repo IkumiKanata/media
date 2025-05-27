@@ -30,10 +30,6 @@ fn main() {
         Option::Some(media) => media.describe(),
         Option::None => println!("No item found"),
     }
-    match catalog.items.get(100) {
-        Option::Some(media) => media.describe(),
-        Option::None => println!("No item found"),
-    }
 
     if let Some(media) = catalog.get_by_index(0) {
         media.describe();
