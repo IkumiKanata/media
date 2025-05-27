@@ -78,4 +78,8 @@ fn main() {
         MightHaveValue::ThereIsAValue(media) => media.describe(),
         MightHaveValue::NoValueAvailable => println!("No item found"),
     }
+    match catalog.items.get(100) {
+        Option::Some(media) => media.describe(),
+        Option::None => println!("No item found"),
+    }
 }
