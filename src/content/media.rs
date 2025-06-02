@@ -7,6 +7,20 @@ pub enum Media {
     Placeholder,
 }
 
+#[derive(Debug)]
+pub enum Genre {
+    Fiction,
+    NonFiction,
+    Science,
+    History,
+    Biography,
+    Mystery,
+    Romance,
+    Horror,
+    Comedy,
+    Drama,
+}
+
 impl Media {
     pub fn describe(&self) {
         match self {
@@ -15,6 +29,23 @@ impl Media {
             Media::AudioBook { title } => println!("AudioBook: {}", title),
             Media::Podcast(episode) => println!("Podcast: {}", episode),
             Media::Placeholder => println!("Placeholder"),
+        }
+    }
+}
+
+impl Genre {
+    pub fn description(&self) -> &str {
+        match self {
+            Genre::Fiction => "Fiction",
+            Genre::NonFiction => "Non-Fiction",
+            Genre::Science => "Science",
+            Genre::History => "History",
+            Genre::Biography => "Biography",
+            Genre::Mystery => "Mystery",
+            Genre::Romance => "Romance",
+            Genre::Horror => "Horror",
+            Genre::Comedy => "Comedy",
+            Genre::Drama => "Drama",
         }
     }
 }
